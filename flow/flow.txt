@@ -1,0 +1,95 @@
+Title "Consult Transfer to Service"
+
+skinparam {
+    UI DarkSlateGray
+    Body DarkSlateGray
+    Hand SteelBlue
+    Camera DarkSlateGray
+    Dog DarkSlateGray
+    Stick SteelBlue
+}
+
+box "UI" #LightGreen
+participant "UI" as UI
+end box
+
+box "Body" #LightYellow
+participant "Body" as Body
+end box
+
+box "Hand" #LightGrey
+participant "Hand" as Hand
+end box
+
+box "Camera" #c6deff
+participant "Camera" as Camera
+
+end box
+
+box "Dog" #Orange
+participant "Dog" as Dog
+end box
+
+box "Stick" #Tan
+participant "Stick" as Stick
+end box
+
+== call arrives ==
+
+Camera -> Body: Следим за чуваком
+note left
+смотрим на чувака пока
+thowStick = 0
+end note
+
+UI -> UI : Дотронуться до экрана, появляется точка опоры для цели (target)
+note left
+Тач появился 
+определяем переменные 
+stopTarget = 1 (останавливаем движение "креста")
+выставляем visible для "креста" и "маркера"
+end note
+
+UI -> UI
+note left
+смещаем маркер за "пальцем"
+определяем и устанавливаем углы 
+поворота руки относительно
+положения маркера к кресту
+end note
+
+UI -> Hand: Выравниваем руку согласно углам определенным в предыдущем шаге
+
+UI -> UI: Отпускаем тач
+
+UI -> Hand: Запустить вращение руки
+
+Hand -> Hand: Вращение руки в течение 0.15 сек
+
+Hand -> Hand: Задаем импусль и отпускаем палку
+note left
+Палка прикреплена к руке пока trowStick = 0
+Выставляем переменные
+throwStick = 1
+end note
+
+Hand -> Stick: Отпускаем палку
+note left
+apply impulse = 1
+add anngle = self angle
+end note
+
+Stick -> Camera: Следи за мной
+note left
+throwStick = 1 
+камера узнает, что надо следить
+за палкой после смены этой переменной
+в 1
+Вернуть угол руки на место
+end note
+
+Stick -> Stick: Касание земли
+
+Stick -> UI: Показать кнопку "Переключить камеру на собаку"
+
+UI -> UI: Нажать кнопку "Переключить камеру на собаку"ё
